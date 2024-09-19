@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="text/html; charset = UTF-8"; http-equiv="content-type">
+    <title>Formulário de Adoção de Animal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="home">
+        	<img src="/img/logo.png" alt="logo" class="logo">
+        </div>
+    </header>
+
+    <main>
+        <div class="pagina-container">
+            <div class="pagina-container-info">
+                <h1 class="titulo">Formulário para adoção do animal</h1>
+                <form id="formularioAdocao" class="formularios-container" method="POST" action="/formulario/insert">
+                
+                    <div class="formulario-box">
+                        <label for="nome">Nome</label>
+                        <input class="input-text" id="nome" name="nome"  placeholder="Digite seu nome"/>
+
+                        <label for="idade">Idade</label>
+                        <input class="input-text" id="idade" name="idade" placeholder="Digite sua idade"/>
+                        
+                        <label for="sexo">Sexo</label>
+                        <div class="sexo-checkbox">
+                            <input type="radio" id="sexo-feminino" name="sexo" value="F">
+                            <label for="sexo-feminino">Feminino</label>
+                            <input type="radio" id="sexo-masculino" name="sexo" value="M">
+                            <label for="sexo-masculino">Masculino</label>
+                        </div>
+                        <label for="Cidade">Cidade</label>
+                        <input class="input-text" id="cidade" name="cidade" placeholder="Cidade"/>
+
+                        <label for="Ciente">Ciente</label>
+                        <input class="input-text" id="ciente" name="ciente" placeholder="Todos da sua casa estão cientes da adoção?"/>
+
+                        <label for="teveAnimal">Teve Animal</label>
+                        <input class="input-text" id="teveAnimal" name="teveAnimal" placeholder="Você já teve algum animal?"/>
+                    </div>
+                    <div class="formulario-box">
+                        <label for="permissao">Permissao</label>
+                        <input class="input-text" id="permissao" name="permissao" placeholder="Você permite que a ONG te visite?"/>
+
+                        <label for="animal-sozinho">Animal Sozinho</label>
+                        <textarea class="input-text" id="animalSozinho" name="animalSozinho" placeholder="O animal ficará muito tempo sozinho?"></textarea>
+
+						 <label for="aonde-fica">Aonde Fica?</label>
+                        <textarea class="input-text" id="aondeFica" name="aonde-fica" placeholder="Aonde o seu animal ficará se você viajar?"></textarea>
+                        
+                        <label for="ap-liberado">Apartamento Liberado</label>
+                        <textarea class="input-text" id="apLiberado" name="apLiberado" placeholder="Em seu apartamento é permitido ter animal?"></textarea>
+
+						<label for="moradia">Moradia</label>
+                        <textarea class="input-text" id="moradia" name="moradia" placeholder="Mora em casa ou apartamento?"></textarea>
+                        
+                    </div>
+                     <div class="formulario-box">
+                        <label for="telefone">Telefone</label>
+                        <input class="input-text" id="telefone" name="telefone" placeholder="(XX)XXXXX-XXXX"/>
+
+                        <label for="email">Email</label>
+                        <textarea class="input-text" id="email" name="email" placeholder="example@email.com"></textarea>
+
+						 <label for="nome-animal">Nome do Animal:</label>
+                        <textarea class="input-text" id="nomeAnimal" name="aondeFica" placeholder="Com quem ele pode ficar se você viajar?"></textarea>
+                        
+                        <label for="imagem-animal">Imagem do animal</label>
+                    	<input class="input-text" id="url_imagem" name="imagem" type="url" placeholder="url da foto do animal" />
+
+                    </div>
+                    <button type="submit" class="botao_adocao">Submit</button>
+                </form>
+           
+                    <div class="btn">
+    					<a href="http://localhost:8080/formulario/list"><button type="button" class="botao-listar">Listar</button></a>
+					</div>
+                    
+
+                </div>
+            
+        </div>
+    </main>
+    <footer class="footer-estilizadoJP">
+        <div>
+            <p>&copy; <span id="dataJP"></span> SOS bichinhos</p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+	    $(document).ready(function () {
+	        init();
+	    });
+	
+	    function init() {
+	        carregarFormulario();
+	    }
+	
+	    function carregarFormulario() {
+	        // Aqui você coloca o que essa função deve fazer
+	        console.log("Formulário carregado com sucesso.");
+	    }
+    </script>
+</body>
+</html>
