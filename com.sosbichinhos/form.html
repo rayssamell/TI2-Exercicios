@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="refresh" content=1;>
+	<meta content="text/html; charset = UTF-8"; http-equiv="content-type">
     <title>Formulário de Adoção de Animal</title>
-    <link rel="stylesheet" href="src/main/resources/public/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <div class="home">
-            <img src="/img/patinhaLogo.jpg" alt="logo" class="logo">
+        	<img src="/img/logo.png" alt="logo" class="logo">
         </div>
     </header>
 
@@ -18,7 +18,7 @@
         <div class="pagina-container">
             <div class="pagina-container-info">
                 <h1 class="titulo">Formulário para adoção do animal</h1>
-                <form id="adocaoForm" class="formularios-container">
+                <form id="formularioAdocao" class="formularios-container" method="POST" action="/formulario/insert">
                 
                     <div class="formulario-box">
                         <label for="nome">Nome</label>
@@ -34,87 +34,78 @@
                             <input type="radio" id="sexo-masculino" name="sexo" value="M">
                             <label for="sexo-masculino">Masculino</label>
                         </div>
-
-                        <label for="cidade">Cidade</label>
+                        <label for="Cidade">Cidade</label>
                         <input class="input-text" id="cidade" name="cidade" placeholder="Cidade"/>
 
-                        <label for="ciente">Ciente</label>
-                        <input class="input-text" id="ciente" name="ciente" placeholder="Sua família está ciente da adoção?"/>
+                        <label for="Ciente">Ciente</label>
+                        <input class="input-text" id="ciente" name="ciente" placeholder="Todos da sua casa estão cientes da adoção?"/>
 
                         <label for="teveAnimal">Teve Animal</label>
                         <input class="input-text" id="teveAnimal" name="teveAnimal" placeholder="Você já teve algum animal?"/>
                     </div>
-
                     <div class="formulario-box">
-                        <label for="permissao">Permissão</label>
+                        <label for="permissao">Permissao</label>
                         <input class="input-text" id="permissao" name="permissao" placeholder="Você permite que a ONG te visite?"/>
 
-                        <label for="animalSozinho">Animal Sozinho</label>
-                        <textarea class="input-text" id="animalSozinho" name="animalSozinho" placeholder="Se você viajar, o animal ficará sozinho?"></textarea>
+                        <label for="animal-sozinho">Animal Sozinho</label>
+                        <textarea class="input-text" id="animalSozinho" name="animalSozinho" placeholder="O animal ficará muito tempo sozinho?"></textarea>
 
-                        <label for="aondeFica">Aonde Fica?</label>
-                        <textarea class="input-text" id="aondeFica" name="aondeFica" placeholder="Com quem ele pode ficar se você viajar?"></textarea>
-
-                        <label for="apLiberado">Apartamento Liberado</label>
+						 <label for="aonde-fica">Aonde Fica?</label>
+                        <textarea class="input-text" id="aondeFica" name="aonde-fica" placeholder="Aonde o seu animal ficará se você viajar?"></textarea>
+                        
+                        <label for="ap-liberado">Apartamento Liberado</label>
                         <textarea class="input-text" id="apLiberado" name="apLiberado" placeholder="Em seu apartamento é permitido ter animal?"></textarea>
 
-                        <label for="moradia">Moradia</label>
-                        <textarea class="input-text" id="moradia" name="moradia" placeholder="Casa/apartamento ..."></textarea>
+						<label for="moradia">Moradia</label>
+                        <textarea class="input-text" id="moradia" name="moradia" placeholder="Mora em casa ou apartamento?"></textarea>
+                        
                     </div>
-
-                    <div class="formulario-box">
+                     <div class="formulario-box">
                         <label for="telefone">Telefone</label>
-                        <input class="input-text" id="telefone" name="telefone" type="tel" placeholder="(XX)XXXXX-XXXX"/>
+                        <input class="input-text" id="telefone" name="telefone" placeholder="(XX)XXXXX-XXXX"/>
 
                         <label for="email">Email</label>
-                        <input class="input-text" id="email" name="email" type="email" placeholder="example@email.com"/>
+                        <textarea class="input-text" id="email" name="email" placeholder="example@email.com"></textarea>
 
-                        <label for="nomeAnimal">Nome do Animal</label>
-                        <input class="input-text" id="nomeAnimal" name="nomeAnimal" placeholder="Nome do animal"/>
+						 <label for="nome-animal">Nome do Animal:</label>
+                        <textarea class="input-text" id="nomeAnimal" name="aondeFica" placeholder="Com quem ele pode ficar se você viajar?"></textarea>
+                        
+                        <label for="imagem-animal">Imagem do animal</label>
+                    	<input class="input-text" id="url_imagem" name="imagem" type="url" placeholder="url da foto do animal" />
 
-                        <label for="url_imagem">Imagem do animal</label>
-                        <input class="input-text" id="url_imagem" name="imagem" type="url" placeholder="URL da foto do animal"/>
                     </div>
                 </form>
+                    <button type="submit" class="botao_adocao">Submit</button>
+           
+                    <div class="btn">
+                    <a href="http://localhost:8080/formulario/list"><button type="submit" class="botao-listar">Listar</button></a>
+                    </div>
+                    
 
-                <button type="submit" class="botao_adocao">Enviar</button>
-            </div>
-
-            <div class="pagina-container-botoes">
-                <h1 class="titulo">Gerenciamento de Formulários</h1>
-
-                <div class="btn">
-                    <input class="input-text" id="remover_registro" name="remover-registro" placeholder="Digite o ID do formulário a ser removido"/>
-                    <button type="button" class="botao_remover">Remover</button>
                 </div>
-
-                <div class="btn">
-                    <input class="input-text" id="detalhar_registro" name="detalhar-registro" placeholder="Digite o ID do formulário que deseja visualizar"/>
-                    <button type="button" class="botao-detalhar">Detalhar</button>
-                </div>
-
-                <div class="btn">
-                    <a href="http://localhost:8080/formulario"><button type="button" class="botao-listar">Listar</button></a>
-                </div>
-            </div>
+            
         </div>
     </main>
-
     <footer class="footer-estilizadoJP">
         <div>
             <p>&copy; <span id="dataJP"></span> SOS bichinhos</p>
         </div>
     </footer>
-
-    <script src="src/main/resources/public/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/script.js"></script>
     <script>
-        $(document).ready(function () {
-            init();
-        });
-
-        function init() {
-            carregarFormulario();
-        }
+	    $(document).ready(function () {
+	        init();
+	    });
+	
+	    function init() {
+	        carregarFormulario();
+	    }
+	
+	    function carregarFormulario() {
+	        // Aqui você coloca o que essa função deve fazer
+	        console.log("Formulário carregado com sucesso.");
+	    }
     </script>
 </body>
 </html>
