@@ -1,6 +1,7 @@
 package model;
 
 public class Formulario {
+	
     private int id;
     private String nome;
     private int idade;
@@ -57,7 +58,7 @@ public class Formulario {
 		setNomeAnimal(nome_animal);
 		setUrlImagem(imagem_animal); 
 		setMoradia(moradia);
-		}
+    }
 
     public int getId() {
         return id;

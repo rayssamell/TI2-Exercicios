@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const apiUrl_Formulario = "/formulario";
 
-    // Função para salvar formulário submetido
+    // Funcao para salvar formulario
     function saveForm(dado) {
         fetch(apiUrl_Formulario, { 
             method: 'POST',
@@ -21,22 +21,53 @@ document.addEventListener("DOMContentLoaded", () => {
           });
     }
 
-    // Função para deletar formulários
-    function deleteForm(id) {
-        fetch(`${apiUrl_Formulario}/delete/` + id, {
-            method: 'DELETE',
-        }).then(response => response.json())
-          .then(id => {
-            console.log(id);
-            alert("Formulário " + id + " removido com sucesso");
-          })
-          .catch(error => {
-              console.error('Erro:', error);
-              alert("Erro ao remover o formulário");
-          });
-    }
+    // Função para deletar formulario
+	function deleteForm(id) {
+	    fetch(`${apiUrl_Formulario}/${id}`, {
+	        method: 'DELETE',
+	    })
+	    .then(response => {
+	        if (response.ok) {
+	            alert(`Formulário ${id} removido com sucesso.`);
+	        } else {
+	            alert(`Erro ao deletar: ${response.statusText}`);
+	        }
+	    })
+	    .catch(error => {
+	        console.error('Erro:', error);
+	        alert("Erro ao remover o formulário");
+	    });
+	}
 
-    // Função para inserir novo formulário
+	//Funcao para obter formulario do id solicitado
+	function getForm(FunctionCallBack, id) {
+	    fetch(`${apiUrl_Formulario}/${id}`)
+	        .then((res) => res.json())
+	        .then(data => {
+	        FunctionCallBack(data);
+	        	return data;
+	        })
+	        .catch(error => {
+	        	alert("Formulario não encontrado");
+	            console.error('Erro:', error);
+	        });
+	}
+
+	// Funcao para obter todos os formularios submetidos
+	function getAll(FunctionCallBack) {
+	    fetch(`${apiUrl_Formulario}`)
+	        .then((res) => res.json())
+	        .then(data => {
+	        FunctionCallBack(data);
+	           return data;
+	        })
+	        .catch(error => {
+	        	alert("Formulario não encontrado");
+	            console.error('Erro:', error);
+	        });
+	}
+
+    // Funcao para inserir novo formulário
     function insertForm() {
         const inputNome = document.querySelector("#nome").value;
         const inputIdade = document.querySelector("#idade").value;
@@ -51,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const inputTelefone = document.querySelector("#telefone").value;
         const inputEmail = document.querySelector("#email").value;
         const inputNomeAnimal = document.querySelector("#nomeAnimal").value;
-        const inputImagemAnimal = document.querySelector("#url_imagem").value;
+        const inputImagemAnimal= document.querySelector("#url_imagem").value;
 
         let formulario = {
             nome: inputNome,
@@ -70,30 +101,78 @@ document.addEventListener("DOMContentLoaded", () => {
             imagemAnimal: inputImagemAnimal
         };
 
-        saveForm(formulario);
+		saveForm(formulario).then(() => {
+		    // Limpa os campos apps a submissao
+		 	document.getElementById("formularioAdocao").reset();
+		 });
         console.log(formulario);
+		
     }
-
-    // Eventos - Botões
+	
+    // Eventos - Botoes
     const SubmeterFormBtn = document.querySelector(".botao_adocao");
-    const RemoverBtn = document.querySelector(".botao_remover");
-    const remover_id = document.querySelector("#remover_registro");
 
+	//botao para submeter o formulario apos preenche-lo
     SubmeterFormBtn.addEventListener("click", function(event) {
         event.preventDefault();
         insertForm();
     });
+	
+	//botao para listar formularios
+	const botaoListar = document.querySelector(".botaoListar");
+	botaoListar.addEventListener("click", function(event) {
+	    event.preventDefault(); 
+	    getAll(formularios => {
+	        Listar(formularios);
+	        document.getElementById("myModal").style.display = "block"; 
+	    });
+	});
 
-    RemoverBtn.addEventListener("click", function() {
-        const id = remover_id.value;
-        deleteForm(id); 
-    });
+	// Funcao para renderizar os formularios
+	function Listar(formularios) {
+	    const modalBody = document.getElementById("modal-body");
+	    modalBody.innerHTML = `<h1 class="titulo">Formulários</h1>`; 
 
-    // Detalhar formulário (implemente a função detailForm)
-    const detailBtn = document.querySelector(".botao-detalhar");
-    detailBtn.addEventListener("click", function() {
-        const id = remover_id.value;
-        detailForm(id);  // Função `detailForm` precisa ser implementada
-    });
+	    if (formularios.length === 0) {
+	        modalBody.innerHTML += `<p>Nenhum formulário encontrado.</p>`;
+	        return;
+	    }
+
+	    formularios.forEach(formulario => {
+	        // Verifica se as propriedades existem
+	        const imagem = formulario.imagem_animal || 'default-image.jpg'; 
+	        modalBody.innerHTML += `
+	        <section class="flexPerfilJP">
+	            <div>
+	                <img id="avatarPrincipalJP" src="${imagem}" alt="formulario">
+	            </div>
+	            <div class="informacoesJP">
+	                <p>Nome: ${formulario.nome || 'N/A'}</p>
+	                <p><strong>ID do formulário:</strong> ${formulario.id || 'N/A'}</p>
+	                <p><strong>Cidade:</strong> ${formulario.cidade || 'N/A'}</p>
+	                <p><strong>Idade:</strong> ${formulario.idade || 'N/A'}</p>
+	                <p><strong>Sexo:</strong> ${formulario.sexo || 'N/A'}</p>
+					<p><strong>Nome do Animal:</strong> ${formulario.nome_animal || 'N/A'}</p>
+					<button class="botao-detalhar" data-id="${formulario.id}">Detalhar</button>
+					<button class="botao-deletar" data-id="${formulario.id}">Deletar</button>
+	            </div>
+	        </section>`;
+	    });
+	}
+	
+	//botoes para detalhar e/ou excluir um formulario
+	const modalBody = document.getElementById("modal-body");
+	    modalBody.addEventListener("click", function(event) {
+			if (event.target.classList.contains("botao-detalhar")) {
+			    const id = event.target.dataset.id;
+			    window.location.href = `detail.html?id=${id}`; // Redireciona para a página de detalhes
+			}
+			
+			if (event.target.classList.contains("botao-deletar")) {
+			    const id = event.target.dataset.id;
+			    deleteForm(id); // Chama a função de deletar
+			}
+
+	});
 
 });

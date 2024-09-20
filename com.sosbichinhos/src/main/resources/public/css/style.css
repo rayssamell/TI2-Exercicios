@@ -535,7 +535,7 @@ span.fechar-modalJP {
 }
 
 .footer-estilizadoJP {
-  background-color: #54644B;
+  background-color: #0433BF;
   color: white;
   padding: 20px;
   text-align: center;
@@ -2127,6 +2127,26 @@ main {
   margin: 10px;
 }
 
+.botaoListar{
+  background-color: #0433BF;
+  color: white;
+  width: 150px;
+  height: 48px;
+  border-radius: 20px;
+  transition: 200ms;
+  cursor: pointer;
+  margin: 10px;
+}
+.botao-deletar{
+  background-color: red;
+  color: white;
+  width: 150px;
+  height: 48px;
+  border-radius: 20px;
+  transition: 200ms;
+  cursor: pointer;
+  margin: 10px;
+}
 
 .botao-cadastra-animal:hover {
   background-color: black;
