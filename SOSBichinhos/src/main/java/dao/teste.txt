@@ -1,0 +1,9 @@
+ public void inserirFormulario(Formulario formulario) throws SQLException {
+        String sql = "INSERT INTO Formulario (id_pessoa, data_adocao, observacoes) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, formulario.getPessoa().getId());  // Usando o idPessoa como chave estrangeira
+            stmt.setDate(2, java.sql.Date.valueOf(formulario.getDataAdocao()));
+            stmt.setString(3, formulario.getObservacoes());
+            stmt.executeUpdate();
+        }
+    }
