@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Detecção Facial Azure</title>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script type="text/javascript">
+		    function analyzeFace() {
+		        var apiKey = document.getElementById("apiKeyInput").value;
+		        var serviceUrl = document.getElementById("serviceUrlInput").value;
+		        var uriBase = serviceUrl + "/face/v1.0/detect";
+		    
+		        // Parâmetros da requisição.
+		        var params = {
+		            "detectionModel": "detection_02",
+		            "returnFaceId": "true"
+		        };
+		    
+		        // Mostra a imagem passada pelo usuário.
+		        var imageUrl = document.getElementById("imageInput").value;
+		        document.querySelector("#displayImage").src = imageUrl;
+		    
+		        // Faz a chamada da API.
+		        $.ajax({
+		            url: uriBase + "?" + $.param(params),
+		    
+		            beforeSend: function(xhrObj){
+		                xhrObj.setRequestHeader("Content-Type","application/json");
+		                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", apiKey);
+		            },
+		    
+		            type: "POST",
+		    
+		            data: '{"url": ' + '"' + imageUrl + '"}',
+		        })
+		        .done(function(data) {
+		            $("#responseTextArea").val(JSON.stringify(data, null, 2));
+		        })
+		        .fail(function(jqXHR, textStatus, errorThrown) {
+		            var errorString = (errorThrown === "") ?
+		                "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+		            errorString += (jqXHR.responseText === "") ?
+		                "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+		                    jQuery.parseJSON(jqXHR.responseText).message :
+		                    jQuery.parseJSON(jqXHR.responseText).error.message;
+		            alert(errorString);
+		        });
+		    };
+		</script>
+		<!-- Estilização da página -->
+		<style>
+			html, body {
+			    max-width: 100%;
+			    overflow-x: hidden;
+			}
+			html{
+				width: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				background-color: #f4f5f6;
+				width: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			#mainTitle{
+				font-family: 'Roboto', sans-serif;
+				text-align: center;
+				font-size: 40pt;
+				width: 100%;
+				background-color: #1a1a1f;
+				padding: 30pt;
+				margin: 0;
+				color: #f4f5f6;
+			}
+			#mainContent{
+				max-width: 1000px;
+  				margin: auto;
+  				font-family: 'Open Sans', sans-serif;
+  				padding-top: 10pt;
+			}
+			#inputFields{
+				display: flex;
+				flex-direction: column;
+				width: 50%;
+				margin: auto;
+			}
+			.inputGroup{
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				margin: 5pt 0;
+			}
+			.inputLabel{
+				width: 50%;
+				margin: 0;
+			}
+			.inputField{
+				width: 50%;
+				height: 25pt;
+				margin-left: 0;
+				box-sizing: border-box;
+    			border: 1px solid #4c4c51;
+   				color: #4c4c51;
+    			line-height: 1.2;
+    			font-family: 'Roboto', sans-serif;
+			}
+			#analyzeButton{
+				background-color: #0078d4;
+    			border: 1px solid #0078d4;
+    			border-radius: 4px;
+    			color: #fff;
+    			padding: 5px 8px;
+    			max-width: 120pt;
+    			margin: auto;
+    			margin-top: 5pt;
+			}
+			textarea{
+				background-color: #f9fafa;
+			}
+		</style>
+    </head>
+    <body>
+    	<h1 id="mainTitle">Face Detection</h1>
+	    	<div id="mainContent">
+			Enter the URL of an image containing one or more faces, then click the <strong>Analyze Face</strong> button.<br><br>
+			<div id="inputFields">
+				<div class="inputGroup">
+					<p class="inputLabel">Azure Application URL:</p> 
+					<input class="inputField" type="text" name="serviceUrlInput" id="serviceUrlInput"/>
+				</div>
+				<div class="inputGroup">
+					<p class="inputLabel">Application Key:</p> 
+					<input class="inputField" type="password" name="apiKeyInput" id="apiKeyInput"/>
+				</div>
+				<div class="inputGroup">
+					<p class="inputLabel">Image URL to be analyzed:</p> 
+					<input class="inputField" type="text" name="imageInput" id="imageInput"/>
+				</div>
+				<button id="analyzeButton" onclick="analyzeFace()">Analyze Face</button><br><br>
+			</div>
+			<div id="wrapper" style="width:1020px; display:table;">
+			    <div id="jsonOutput" style="width:600px; display:table-cell;">
+			        Response:<br><br>
+			        <textarea id="responseTextArea" class="UIInput"
+			            style="width:580px; height:400px;"></textarea>
+			    </div>
+			    <div id="imageDiv" style="width:420px; display:table-cell;">
+			        Source Image:<br><br>
+			        <img id="displayImage" width="400" />
+			    </div>
+			</div>
+		</div>
+    </body>
+</html>
